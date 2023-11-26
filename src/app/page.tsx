@@ -1,95 +1,56 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+'use client' 
+// pages/MyFormPage.tsx
+import React, { useState } from 'react';
 
-export default function Home() {
+const MyFormPage: React.FC = () => {
+  const [inputValue1, setInputValue1] = useState<string>('');
+  const [inputValue2, setInputValue2] = useState<string>('');
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    // Pass the input values to your function
+    handleFormSubmit(inputValue1, inputValue2);
+  };
+
+  const handleInputChange1 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue1(event.target.value);
+  };
+
+  const handleInputChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue2(event.target.value);
+  };
+
+  const handleFormSubmit = (value1: string, value2: string) => {
+    // Your function that uses the form input values
+    // For demonstration purposes, we'll just log them to the console
+    console.log('Form input value 1:', value1);
+    console.log('Form input value 2:', value2);
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+    <div>
+      <h1>Form Page</h1>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="inputField1">Enter value 1:</label>
+        <input
+          type="text"
+          id="inputField1"
+          value={inputValue1}
+          onChange={handleInputChange1}
         />
-      </div>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+        <label htmlFor="inputField2">Enter value 2:</label>
+        <input
+          type="text"
+          id="inputField2"
+          value={inputValue2}
+          onChange={handleInputChange2}
+        />
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
+};
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
-}
+export default MyFormPage;
