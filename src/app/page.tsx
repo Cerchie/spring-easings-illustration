@@ -1,6 +1,8 @@
 'use client' 
-// pages/MyFormPage.tsx
+
+import styles from './page.module.css'
 import React, { useState } from 'react';
+import anime from 'animejs';
 
 const MyFormPage: React.FC = () => {
   const [mass, setMass] = useState<string>('');
@@ -27,53 +29,67 @@ const MyFormPage: React.FC = () => {
   const handleInputChangeVelocity = (event: React.ChangeEvent<HTMLInputElement>) => {
     setVelocity(event.target.value);
   };
-  const handleFormSubmit = (value1: string, value2: string, value3: string, value4: string) => {
-    // Your function that uses the form input values
-    // For demonstration purposes, we'll just log them to the console
-    console.log('Form input value 1:', value1);
-    console.log('Form input value 2:', value2);
-    console.log('Form input value 1:', value3);
-    console.log('Form input value 2:', value4);
+  const handleFormSubmit = (mass: string, stiffness: string, damping: string, velocity: string) => {
+    anime({
+      targets: '.divToAnimate',
+      translateX: 250,
+      direction: 'alternate',
+      loop: true,
+      easing: `spring(${mass}, ${stiffness}, ${damping}, ${velocity})`
+    })
+    console.log('mass value from form', mass);
   };
 
   return (
-    <div>
-      <h1>Form Page</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="massField">Enter mass:</label>
+    <div id="springcontainer" className={styles.springcontainer}>
+      <h1>Spring Easing</h1>
+      <form onSubmit={handleSubmit} className={styles.springForm}>
+        <label htmlFor="massField" className={styles.springLabel}>Enter mass:</label>
         <input
           type="text"
           id="massField"
           value={mass}
           onChange={handleInputChangeMass}
+          className={styles.springInput}
         />
 
-<label htmlFor="stiffnessField">Enter stiffness:</label>
+<label htmlFor="stiffnessField" className={styles.springLabel}>Enter stiffness:</label>
         <input
           type="text"
           id="stiffnessField"
           value={stiffness}
           onChange={handleInputChangeStiffness}
+          className={styles.springInput}
         />
 
-        <label htmlFor="velocityField">Enter velocity:</label>
-        <input
-          type="text"
-          id="velocityField"
-          value={velocity}
-          onChange={handleInputChangeVelocity}
-        />
-
-<label htmlFor="dampingField">Enter damping:</label>
+<label htmlFor="dampingField" className={styles.springLabel}>Enter damping:</label>
         <input
           type="text"
           id="dampingField"
           value={damping}
           onChange={handleInputChangeDamping}
+          className={styles.springInput}
         />
 
-        <button type="submit">Submit</button>
+        <label htmlFor="velocityField" className={styles.springLabel}>Enter velocity:</label>
+        <input
+          type="text"
+          id="velocityField"
+          value={velocity}
+          onChange={handleInputChangeVelocity}
+          className={styles.springInput}
+        />
+        <button type="submit"    className={styles.springButton}>Submit</button>
       </form>
+      <div className="divToAnimate">DIV</div>
+      <style jsx>{`
+        .divToAnimate{
+         background-color: #B4F8C8;;
+         width: 4em;
+         height: 4em;
+         border-radius: 50%;
+         margin: 4em;}
+      `}</style>
     </div>
   );
 };
